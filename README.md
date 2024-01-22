@@ -17,8 +17,10 @@ This package includes several timers base on Python.
 **tps:** tick per second
 
 ## Installation
+
 ```
 pip install diff_timer
+pip install --upgrade diff_timer
 ```
 
 ## How to use
@@ -26,7 +28,7 @@ pip install diff_timer
 #### 1、Instantiation
 
 ```python
-from controller import Controller
+from diff_timer import Controller
 INTERVAL = 5
 tps = 50
 controller = Controller()
@@ -47,7 +49,7 @@ while True:
 #### 3、set timer at any place that you want
 
 ```python
-from controller import setTimeOut
+from diff_timer import setTimeOut
 def test():
     print("this is a test func")
 

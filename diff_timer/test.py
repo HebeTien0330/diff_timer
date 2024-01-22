@@ -1,4 +1,4 @@
-from controller import Controller, setTimeOut
+from diff_timer import Controller, setTimeOut
 import time
 
 counting = 1

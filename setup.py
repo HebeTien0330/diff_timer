@@ -18,7 +18,7 @@ URL = 'https://github.com/HebeTien0330/diff_timer'
 EMAIL = '527094604@qq.com'
 AUTHOR = 'Clarify'
 REQUIRES_PYTHON = '>=3.6.0'
-VERSION = '0.1.3'
+VERSION = '0.1.4'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
