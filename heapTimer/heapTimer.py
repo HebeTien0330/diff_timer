@@ -26,7 +26,7 @@ class HeapTimerManager:
         heapq.heapify(self.m_taskQueue)
         self.m_nameList = []
         self.m_ignoreTimer = []
-        self.m_nowTick = 0
+        self.m_curTick = 0
         self.m_tick5 = 0
 
     def __new__(cls, *args, **kwargs):
@@ -35,18 +35,18 @@ class HeapTimerManager:
         cls.__isinstance = object.__new__(cls)
         return cls.__isinstance
 
-    def tick(self, nowTick):
-        self.m_nowTick = nowTick
+    def tick(self, curTick):
+        self.m_curTick = curTick
         self.m_tick5 += 1
         if self.m_tick5 != self.m_interval:
             return
         self.m_tick5 = 0
-        self.CheckTimer(self.m_nowTick)
+        self.CheckTimer(self.m_curTick)
 
     def setTimeOut(self, func, timeout, name):
         if name in self.m_nameList:
             raise NameError(f"timer name repeated: {name}")
-        timeout = self.time2Tick(timeout) + self.m_nowTick
+        timeout = self.time2Tick(timeout) + self.m_curTick
         if not timeout:
             raise ValueError(f"timer timeout error: {name}")
         timer = HeapTimer(func, timeout, name)
@@ -60,13 +60,13 @@ class HeapTimerManager:
         self.m_nameList.remove(name)
         self.m_ignoreTimer.append(name)
 
-    def CheckTimer(self, nowTick):
+    def CheckTimer(self, curTick):
         while True:
             try:
                 timer = heapq.heappop(self.m_taskQueue)
             except IndexError:
                 break
-            if timer.getTimeOut() < nowTick:
+            if timer.getTimeOut() < curTick:
                 func = timer.execute()
                 asyncio.run(func)
                 continue

@@ -25,7 +25,7 @@ class TimerManager:
         self.m_taskQueue = {}
         self.m_tickPerSecond = tps
         self.m_interval = interval
-        self.m_nowTick = 0
+        self.m_curTick = 0
         self.m_tick5 = 0
 
     def __new__(cls, *args, **kwargs):
@@ -34,18 +34,18 @@ class TimerManager:
         cls.__isinstance = object.__new__(cls)
         return cls.__isinstance
 
-    def tick(self, nowTick):
-        self.m_nowTick = nowTick
+    def tick(self, curTick):
+        self.m_curTick = curTick
         self.m_tick5 += 1
         if self.m_tick5 != self.m_interval:
             return
         self.m_tick5 = 0
-        self.CheckTimer(self.m_nowTick)
+        self.CheckTimer(self.m_curTick)
 
     def setTimeOut(self, func, timeout, name):
         if name in self.m_taskQueue:
             raise NameError(f"timer name repeated: {name}")
-        timeout = self.time2Tick(timeout) + self.m_nowTick
+        timeout = self.time2Tick(timeout) + self.m_curTick
         if not timeout:
             raise ValueError(f"timer timeout error: {name}")
         timer = Timer(func, timeout, name)
@@ -62,9 +62,9 @@ class TimerManager:
             return
         del self.m_taskQueue[name]
 
-    def CheckTimer(self, nowTick):
+    def CheckTimer(self, curTick):
         for timer in list(self.m_taskQueue.values()):
-            if timer.getTimeOut() < nowTick:
+            if timer.getTimeOut() < curTick:
                 func = timer.execute()
                 asyncio.run(func)
             

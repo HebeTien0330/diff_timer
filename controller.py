@@ -54,11 +54,11 @@ class Controller:
             return
         self.m_timerCol = initFunc(interval, tps, size)
 
-    def tick(self, nowTick):
+    def tick(self, curTick):
         if not self.m_time:
             raise PermissionError("time is not initial")
-        self.m_time.tick(nowTick)
-        self.m_timerCol.tick(nowTick)
+        self.m_time.tick(curTick)
+        self.m_timerCol.tick(curTick)
 
     def setTimeOut(self, func, timeout, name):
         if not self.m_isInit:

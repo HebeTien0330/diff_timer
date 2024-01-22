@@ -23,7 +23,7 @@ class WheelTimerManager:
         self.m_tickPerSecond = tps
         self.m_interval = interval
         self.m_wheelSize = size
-        self.m_nowTick = 0
+        self.m_curTick = 0
         self.m_tick5 = 0
         self.m_nameList = {}
         self.m_wheelTimerLow = WheelTimerLow(interval, size)
@@ -43,21 +43,21 @@ class WheelTimerManager:
         self.m_wheelTimerTop.setLowerTimer(self.m_wheelTimerMid)
         self.m_wheelTimerMid.setLowerTimer(self.m_wheelTimerLow)
 
-    def tick(self, nowTick):
-        self.m_nowTick = nowTick
+    def tick(self, curTick):
+        self.m_curTick = curTick
         self.m_tick5 += 1
         if self.m_tick5 != self.m_interval:
             return
         self.m_tick5 = 0
-        self.m_wheelTimerLow.tick(nowTick)
+        self.m_wheelTimerLow.tick(curTick)
         if not self.m_wheelTimerLow.isCompleteRound():
             self.m_wheelTimerMid.downgradeTask()
             return
-        self.m_wheelTimerMid.tick(nowTick)
+        self.m_wheelTimerMid.tick(curTick)
         if not self.m_wheelTimerMid.isCompleteRound():
             self.m_wheelTimerMid.downgradeTask()
             return
-        self.m_wheelTimerTop.tick(nowTick)
+        self.m_wheelTimerTop.tick(curTick)
 
     def setTimeOut(self, func, timeout, name):
         if name in self.m_nameList:
@@ -68,7 +68,7 @@ class WheelTimerManager:
         ret = self.m_wheelTimerLow.addTask(func, tick, name)
         if not ret:
             return
-        self.m_nameList[name] = [self.m_nowTick, tick]
+        self.m_nameList[name] = [self.m_curTick, tick]
 
     def removeTimeOut(self, name):
         if name not in self.m_nameList:
@@ -92,7 +92,7 @@ class WheelTimerManager:
 class WheelTimerBase:
 
     def __init__(self, interval, size):
-        self.m_nowTick = 0
+        self.m_curTick = 0
         self.m_upperTimer = None
         self.m_lowerTimer = None
         self.m_interval = interval
@@ -123,8 +123,8 @@ class WheelTimerBase:
     def getLowerTimer(self):
         return self.m_lowerTimer
 
-    def tick(self, nowTick):
-        self.m_nowTick = nowTick
+    def tick(self, curTick):
+        self.m_curTick = curTick
         self.m_pointer += 1
         if self.m_type == WHEEL_SECOND:
             self.execute()
