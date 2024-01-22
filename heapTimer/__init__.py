@@ -1,1 +1,0 @@
-from .heapTimer import initHeapTimer
