@@ -10,7 +10,7 @@ This package includes several timers base on Python.
 
 ## Explanation
 
-**controller:** The Object which is used to create different timer
+**controller:** The Object which is used to create different timers
 
 **tick:** The time interval which is determined by you
 
