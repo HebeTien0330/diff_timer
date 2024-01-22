@@ -49,4 +49,4 @@ def test():
 setTimeOut(test, 10, "test_func")
 ```
 
-**exp: test.py**
+**example: test.py**
