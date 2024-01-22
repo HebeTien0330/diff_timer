@@ -1,5 +1,5 @@
 from controller import Controller, setTimeOut
-import pygame
+import time
 
 counting = 1
 
@@ -10,20 +10,19 @@ def test():
     setTimeOut(test, 2, f"test_{counting}")
 
 def main():
-    tick = 1
+    curTick = 1
     flag = 0
-    clock = pygame.time.Clock()
-    tps = 30
+    tps = 50
     interval = 5
     controller = Controller()
     controller.initTimer("WHEEL", interval, tps)
     while True:
-        clock.tick(tps)
-        controller.tick(tick)
+        time.sleep(0.02)
+        controller.tick(curTick)
         if not flag:
             flag = 1
             setTimeOut(test, 2, f"test_{counting}")
-        tick += 1
+        curTick += 1
 
 if __name__ == "__main__":
     main()
