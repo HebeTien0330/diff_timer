@@ -1,1 +1,1 @@
-from controller import Controller, setTimeOut, getTimeOut, removeTimeOut
+from .controller import Controller, setTimeOut, getTimeOut, removeTimeOut

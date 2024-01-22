@@ -16,6 +16,11 @@ This package includes several timers base on Python.
 
 **tps:** tick per second
 
+## Installation
+```
+pip install diff_timer
+```
+
 ## How to use
 
 #### 1、Instantiation

@@ -11,9 +11,9 @@
 Timer Controller
 """
 
-from timer import initTimer
-from wheelTimer import initWheelTimer
-from heapTimer import initHeapTimer
+from .timer import initTimer
+from .wheelTimer import initWheelTimer
+from .heapTimer import initHeapTimer
 
 class Controller:
 
